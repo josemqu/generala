@@ -1,4 +1,4 @@
-const CACHE = "generala-v13";
+const CACHE = "generala-v14";
 const ASSETS = [
   "/",
   "/index.html",

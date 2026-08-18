@@ -1,3 +1,5 @@
+import confetti from "canvas-confetti";
+
 const STORAGE_KEY = "generala.club.v1";
 
 const categories = [
@@ -54,6 +56,51 @@ function showToast(message) {
   element.textContent = message;
   document.body.appendChild(element);
   toastTimer = setTimeout(() => element.remove(), 2600);
+}
+
+function triggerWinConfetti() {
+  if (typeof window === "undefined") return;
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  const colors = ["#cbea64", "#c73e5a", "#3b2854", "#ffd166", "#06d6a0", "#118ab2", "#ffffff"];
+
+  confetti({
+    particleCount: 75,
+    spread: 90,
+    origin: { y: 0.6 },
+    colors,
+    zIndex: 1000,
+    disableForReducedMotion: true
+  });
+
+  const duration = 2000;
+  const end = Date.now() + duration;
+
+  const frame = () => {
+    confetti({
+      particleCount: 3,
+      angle: 60,
+      spread: 55,
+      origin: { x: 0, y: 0.65 },
+      colors,
+      zIndex: 1000,
+      disableForReducedMotion: true
+    });
+    confetti({
+      particleCount: 3,
+      angle: 120,
+      spread: 55,
+      origin: { x: 1, y: 0.65 },
+      colors,
+      zIndex: 1000,
+      disableForReducedMotion: true
+    });
+
+    if (Date.now() < end) {
+      requestAnimationFrame(frame);
+    }
+  };
+  requestAnimationFrame(frame);
 }
 
 function navTemplate() {
@@ -229,8 +276,27 @@ document.addEventListener("click", (event) => {
   }
   if (target.hasAttribute("data-new-game")) { requestDialog({ title: "¿Abandonar esta partida?", message: "La planilla en curso se descartará. Los jugadores seguirán guardados.", confirm: "Abandonar", danger: true, onConfirm: () => { state.currentGame = null; dialog = null; saveState(); render(); } }); return; }
   if (target.hasAttribute("data-finish-game")) {
-    const totals = state.currentGame.playerIds.map((id) => ({ id, total: totalFor(state.currentGame.scores[id]) })); const max = Math.max(...totals.map((item) => item.total)); const winners = totals.filter((item) => item.total === max).map((item) => getPlayer(item.id)?.name).join(" y ");
-    requestDialog({ title: `${winners} ${winners.includes(" y ") ? "empatan" : "gana"} con ${max}`, message: "Al cerrar, la partida se guardará en el historial y actualizará las estadísticas.", confirm: "Guardar resultado", onConfirm: () => { const finished = { ...state.currentGame, finishedAt: new Date().toISOString() }; state.games.push(finished); state.currentGame = null; dialog = null; view = "history"; const saved = saveState(); render(); showToast(saved ? "Partida guardada en el historial." : "El resultado quedó abierto, pero no pudo guardarse en el dispositivo."); } }); return;
+    const totals = state.currentGame.playerIds.map((id) => ({ id, total: totalFor(state.currentGame.scores[id]) }));
+    const max = Math.max(...totals.map((item) => item.total));
+    const winners = totals.filter((item) => item.total === max).map((item) => getPlayer(item.id)?.name).join(" y ");
+    triggerWinConfetti();
+    requestDialog({
+      title: `🎉 ${winners} ${winners.includes(" y ") ? "empatan" : "gana"} con ${max} pts`,
+      message: "Al cerrar, la partida se guardará en el historial y actualizará las estadísticas.",
+      confirm: "Guardar resultado",
+      onConfirm: () => {
+        triggerWinConfetti();
+        const finished = { ...state.currentGame, finishedAt: new Date().toISOString() };
+        state.games.push(finished);
+        state.currentGame = null;
+        dialog = null;
+        view = "history";
+        const saved = saveState();
+        render();
+        showToast(saved ? "Partida guardada en el historial." : "El resultado quedó abierto, pero no pudo guardarse en el dispositivo.");
+      }
+    });
+    return;
   }
   if (target.dataset.toggleHistory) { const item = document.querySelector(`[data-history-id="${target.dataset.toggleHistory}"]`); const open = item.classList.toggle("open"); target.setAttribute("aria-expanded", open); return; }
   if (target.dataset.deleteGame) { const id = target.dataset.deleteGame; requestDialog({ title: "¿Eliminar esta partida?", message: "El resultado y su aporte a las estadísticas se borrarán de este dispositivo.", confirm: "Eliminar", danger: true, onConfirm: () => { state.games = state.games.filter((game) => game.id !== id); dialog = null; saveState(); render(); } }); return; }
