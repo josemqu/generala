@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <!--
+      THESIS: Una cartelera de club convierte la planilla en el centro de la reunión y rechaza el dashboard de tarjetas.
+      OWN-WORLD: Azul de club, crema de planilla, fichas amarillas, números condensados y placas con sombra desplazada.
+      STORY: Crear la mesa, cargar cada casillero, ver los totales responder y guardar el resultado en la historia del grupo.
+      FIRST VIEWPORT: Marca compacta arriba, contexto de partida y tabla protagonista; la acción principal vive junto al estado actual.
+      FORM: Sexta dirección; cartelera de torneo con registro visible, seed 78164021 y tabla panorámica como staging.
+    -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#3B2854" />
+    <meta name="description" content="Anotá tus partidas de Generala y guardá el historial de tu grupo." />
+    
+    <!-- PWA & Mobile Web App Meta Tags -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Generala" />
+    <meta name="application-name" content="Generala" />
+
+    <!-- PWA Icons -->
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="stylesheet" href="/src/styles.css" />
+    <title>Generala — Tanteador</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <div id="live-region" class="sr-only" aria-live="polite"></div>
+    <script type="module" src="/src/app.js"></script>
+  </body>
+</html>

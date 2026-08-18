@@ -1,0 +1,25 @@
+{
+  "title": "Elegí el mundo visual de Generala",
+  "question": "La opción principal mantiene la tabla completa a la vista y lleva el espíritu de una partida argentina a una interfaz táctil. También podés elegir una carga más inmersiva por turnos o pedir otra propuesta.",
+  "options": [
+    {
+      "id": "club-scoreboard",
+      "label": "Cartelera de club social",
+      "kicker": "DIRECCIÓN PROPUESTA",
+      "lineage": "Pizarras de torneo, fichas numeradas y señalética popular argentina",
+      "body": "Una tabla protagonista, colores de club, números enormes y fichas que se sienten físicas. En el primer vistazo se entiende quién juega, qué falta y quién va ganando. La carga abre una bandeja numérica sobre la misma tabla. Riesgo honesto: hay que controlar la ornamentación para que los puntajes sigan siendo lo primero."
+    },
+    {
+      "id": "turn-feed",
+      "label": "Turno a pantalla completa",
+      "kicker": "ALTERNATIVA",
+      "lineage": "Interfaces verticales de una acción por pantalla",
+      "body": "Cada jugador y categoría ocupa casi toda la pantalla, con el próximo turno a un gesto de distancia. Es excelente para cargar con una mano, pero la tabla general queda a un paso y se pierde parte del ritual de comparar puntajes en simultáneo.",
+      "hero": "https://impeccable.style/worlds/cards/pop-culture-shelf-vertical-video-feed-surface-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/pop-culture-shelf-vertical-video-feed-surface.webp"
+    }
+  ],
+  "reroll": true,
+  "canon": true,
+  "steer": true
+}
